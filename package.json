@@ -1,0 +1,24 @@
+{
+  "name": "proyecto_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miguel98266/Proyecto_Api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Miguel98266/Proyecto_Api/issues"
+  },
+  "homepage": "https://github.com/Miguel98266/Proyecto_Api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
