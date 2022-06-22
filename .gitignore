@@ -99,6 +99,8 @@ dist
 
 # DynamoDB Local files
 .dynamodb/
+# Parcel related files
+.parcel-cache/
 
 # TernJS port file
 .tern-port
