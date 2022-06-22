@@ -7,32 +7,43 @@ let contenedorPersonajes = document.querySelector("#contenedor_personajes");
 let buscar = document.querySelector("#search");
 let limpiarbuscador = document.querySelector("#limpiar");
 let orden = document.querySelector("#orden");
+
 var nombre = "";
+var genero="";
+var specie="";
+var statu="";
 
+var divspecie = document.querySelector("#species");
+var divgender = document.querySelector("#gender");
+var divstatus = document.querySelector("#status");
 
+var statusFilter = [];
+var speciesFilter = [];
+var genderFilter = [];
+var typeFilter = [];
 
-const fetchData = async (episode) => {
+const getEpisodios = async (episode) => {
   return await axios.get(episode).then((res) => res.data);
 };
 
-const data = fetchData("https://rickandmortyapi.com/api/episode/1");
+const data = getEpisodios("https://rickandmortyapi.com/api/episode/1");
 console.log(data.then((res) => res));
 
-function getEpisodios(episode) {
-  axios
-    .get(episode)
-    .then((res) => {
-      console.log(res.data.name);
-      return res.data.name;
-    })
-    .catch((err) => console.log(err));
-}
+// function getEpisodios(episode) {
+//   axios
+//     .get(episode)
+//     .then((res) => {
+//       console.log(res.data.name);
+//       return res.data.name;
+//     })
+//     .catch((err) => console.log(err));
+// }
 
 getPersonajes();
 
 async function buscarPersonaje(e) {
   nombre = e.target.value;
-  currentpage[0]=1;
+  currentpage[0] = 1;
   if (e.key === "Enter") {
     getPersonajes();
   }
@@ -42,8 +53,41 @@ eventListener();
 
 function eventListener() {
   buscar.addEventListener("keypress", buscarPersonaje);
-  // limpiarbuscador.addEventListener("click", limpiarseach);
+  gender.addEventListener("click", filtrarGenero);
+  species.addEventListener("click", filtrarSpecie);
+  divstatus.addEventListener("click", filtrarStatus);
+  limpiarbuscador.addEventListener("click", limpiarseach);
 }
+function limpiarseach() {
+ nombre = "";
+ genero="";
+ specie="";
+ statu="";
+  getPersonajes();
+}
+
+function filtrarGenero(e) {
+  console.log(e.target.htmlFor);
+  if (e.target.htmlFor) {
+    genero=e.target.htmlFor;
+    getPersonajes();
+  }
+}
+function filtrarStatus(e) {
+  console.log(e.target.htmlFor);
+  if (e.target.htmlFor) {
+    statu=e.target.htmlFor;
+    getPersonajes();
+  }
+}
+function filtrarSpecie(e) {
+  console.log(e.target.htmlFor);
+  if (e.target.htmlFor) {
+    specie=e.target.htmlFor;
+    getPersonajes();
+  }
+}
+
 function imprimirPersonajes({ results }) {
   limpiar(contenedorPersonajes);
 
@@ -87,7 +131,7 @@ function imprimirPersonajes({ results }) {
 
       img.src = personaje.image;
       status_specie.textContent =
-        personaje.status + " - " + personaje.species + " - " + personaje.gender;
+      personaje.status + " - " + personaje.species + " - " + personaje.gender;
       labelLocation.textContent = "Last known location:";
       location.textContent = personaje.location.name;
       title.textContent = personaje.name;
@@ -102,7 +146,7 @@ function imprimirPersonajes({ results }) {
       }
       // console.log(personaje.episode[0]);
 
-      let data = fetchData(personaje.episode[0]);
+      let data = getEpisodios(personaje.episode[0]);
       data.then((res) => (episode.textContent = res.episode + " " + res.name));
       labelEpisode.textContent = "First seen in:";
 
@@ -138,7 +182,7 @@ function imprimirPersonajes({ results }) {
     while (episode.firstChild) {
       episode.removeChild(episode.firstChild);
     }
-    nombre.classList.add("text-aquafuerte");
+    nombre.classList.add("text-aquafuerte", "fw-bold");
     nombre.textContent = personaje.name;
     imagen.src = personaje.image;
     genero.textContent = personaje.gender;
@@ -152,7 +196,7 @@ function imprimirPersonajes({ results }) {
       divTemp.classList.add("col-5", "my-2");
       let title = document.createElement("h5");
       let creation = document.createElement("p");
-      let data = fetchData(personaje.episode[i]);
+      let data = getEpisodios(personaje.episode[i]);
       let divCap = document.createElement("div");
       divCap.classList.add("col-7", "my-2");
       let link = document.createElement("a");
@@ -213,8 +257,7 @@ function createPagination(totalPages, page) {
   let prevPageLink = document.createElement("a");
   let prevPageList = document.createElement("li");
 
-  let numberList = document.createElement("li");
-  let numberLink = document.createElement("a");
+  
   console.log("Inicio " + page);
   var active;
   var beforePage = page - 1;
@@ -235,17 +278,7 @@ function createPagination(totalPages, page) {
     // console.log(currentpage);
     getPersonajes();
   };
-  // if (currentpage > 2) {
-  //   //if page value is less than 2 then add 1 after the previous button
-  //   numberList.classList.add("page-item");
-  //   numberLink.classList.add("page-link");
-  //   numberLink.textContent = 1;
-  //   numberLink.dataset.pagina = 1;
-  //   numberList.appendChild(numberLink);
-  //   console.log(numberList);
-  //   paginador.appendChild(numberList);
-  // }
-
+  
   // how many pages or li show before the current li
   if (page == totalPages) {
     beforePage = beforePage - 2;
@@ -280,7 +313,6 @@ function createPagination(totalPages, page) {
     let numLink = document.createElement("a");
     numList.classList.add("page-item");
     if (active) {
-      
       numLink.classList.add(active);
     }
     numLink.classList.add("page-link");
@@ -315,14 +347,135 @@ function createPagination(totalPages, page) {
 }
 async function getPersonajes() {
   try {
-    console.log("Current dentro de get personajes "+currentpage)
-    const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}`;
+    console.log("Current dentro de get personajes " + currentpage);
+    const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}&gender=${genero}&species=${specie}&status=${statu}`;
     const response = await axios.get(url);
     console.log(response.data);
     console.log(response.data.info.next);
     imprimirPersonajes(response.data);
     createPagination(response.data.info.pages, currentpage[0]);
+    GetAllPersonajes(url);
   } catch (error) {
     console.log(error);
+  }
+}
+
+const GetAllPersonajes = async (url) => {
+  try {
+    console.log("Current dentro de get personajes ");
+    // const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}`;
+    const response = await axios.get(url);
+    if (response.data.info.next) {
+      GetAllPersonajes(response.data.info.next);
+      // console.log(datos)
+      // console.log(datos[0])
+    } else {
+      ImprimirFiltros();
+    }
+    for (const resultados of response.data.results) {
+      statusFilter.push(resultados.status);
+      speciesFilter.push(resultados.species);
+      genderFilter.push(resultados.gender);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+function ImprimirFiltros() {
+  const status = new Set(statusFilter);
+  const species = new Set(speciesFilter);
+  const gender = new Set(genderFilter);
+  
+  while (divspecie.firstChild) {
+    divspecie.removeChild(divspecie.firstChild);
+  }
+  
+    while (divgender.firstChild) {
+      divgender.removeChild(divgender.firstChild);
+    }
+  
+  while (divstatus.firstChild) {
+    divstatus.removeChild(divstatus.firstChild);
+  }
+  // const type = new Set(typeFilter);
+  // console.log(status);
+  // console.log(species);
+  // console.log(gender);
+  // console.log(type);
+  let statusArray = Array.from(status);
+  let speciesArray = Array.from(species);
+  let genderArray = Array.from(gender);
+  for (let i = 0; i < speciesArray.length; i++) {
+    let divform = document.createElement("div");
+    divform.classList.add("form-check");
+    let inputRadio = document.createElement("input");
+    inputRadio.type = "radio";
+    inputRadio.classList.add("form-check-input", "x");
+    let labelRadio = document.createElement("label");
+    labelRadio.classList.add("btn", "radio-button-aqua");
+
+    if (!document.querySelector(`${speciesArray[i]}`)) {
+      if (speciesArray[i]==specie) {
+        inputRadio.checked = true;
+      }
+      inputRadio.name = "species";
+      inputRadio.id = speciesArray[i];
+      inputRadio.value = speciesArray[i];
+      labelRadio.htmlFor = speciesArray[i];
+      labelRadio.textContent = speciesArray[i];
+      
+      divform.append(inputRadio, labelRadio);
+      divspecie.appendChild(divform);
+    }
+  }
+  for (let i = 0; i < genderArray.length; i++) {
+    
+    let divform = document.createElement("div");
+    divform.classList.add("form-check");
+    let inputRadio = document.createElement("input");
+    inputRadio.type = "radio";
+    inputRadio.classList.add("form-check-input", "x");
+    let labelRadio = document.createElement("label");
+    labelRadio.classList.add("btn", "radio-button-aqua");
+
+    if (!document.querySelector(`${genderArray[i]}`)) {
+      if (genderArray[i]==genero) {
+        inputRadio.checked = true;
+      }
+      inputRadio.name = "gender";
+      inputRadio.id = genderArray[i];
+      inputRadio.value = genderArray[i];
+      labelRadio.htmlFor = genderArray[i];
+      labelRadio.textContent = genderArray[i];
+      
+      divform.append(inputRadio, labelRadio);
+      divgender.appendChild(divform);
+    }
+  }
+  for (let i = 0; i < statusArray.length; i++) {
+    
+    let divform = document.createElement("div");
+    divform.classList.add("form-check");
+    let inputRadio = document.createElement("input");
+    inputRadio.type = "radio";
+    inputRadio.classList.add("form-check-input", "x");
+    let labelRadio = document.createElement("label");
+    labelRadio.classList.add("btn", "radio-button-aqua");
+
+    if (!document.querySelector(`${statusArray[i]}`)) {
+      if (statusArray[i]==statu) {
+        inputRadio.checked = true;
+      }
+      inputRadio.name = "status";
+      inputRadio.id = statusArray[i];
+      inputRadio.value = statusArray[i];
+      labelRadio.htmlFor = statusArray[i];
+      labelRadio.textContent = statusArray[i];
+      
+      divform.append(inputRadio, labelRadio);
+      divstatus.appendChild(divform);
+    }
   }
 }

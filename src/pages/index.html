@@ -35,62 +35,170 @@
           </div>
         </div>
 
-        <div class="container d-flex flex-column " id="contenedor">
-          <div class="d-flex flex-wrap justify-content-center" id="contenedor_personajes"></div>
+        <div class="container d-flex flex-column" id="contenedor">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="text-center fw-bold fs-4 mb-2 text-aqua">Filters</div>
+              <div
+                class="text-aquafuerte text-decoration-underline text-center mb-3"
+                style="cursor: pointer"
+              >
+                Clear Filters
+              </div>
+              <!-- Acordion de Filtros -->
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      Status
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse show"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body d-flex flex-wrap gap-3" id="status">
+                      
+                        
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                    >
+                      Species
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body d-flex flex-wrap gap-3" id="species">
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button
+                      class="accordion-button collapsed "
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree"
+                      aria-expanded="false"
+                      aria-controls="collapseThree"
+                    >
+                      Gender
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseThree"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body d-flex flex-wrap gap-3" id="gender">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div
+                class="d-flex flex-wrap justify-content-center"
+                id="contenedor_personajes"
+              ></div>
+            </div>
+          </div>
         </div>
         <nav>
-            <ul class="pagination justify-content-center">
-              
-            </ul>
-          </nav>
+          <ul class="pagination justify-content-center"></ul>
+        </nav>
       </div>
     </main>
     <!-- Modal -->
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable" style="max-width:590px;">
-    <div class="modal-content ">
-      <div class="modal-header ">
-        <h5 class="modal-title" id="nombre">Rick Sanchez</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center ">
-          <div class="modal-body">
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-dialog-scrollable"
+        style="max-width: 590px"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="nombre">Rick Sanchez</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                      <img class="mx-auto" id="imagen" src="https://rickandmortyapi.com/api/character/avatar/1.jpeg">
-                    </div>
-                  <div class="col-6"> 
-                      <p class="fw-bold text-aqua">Gender:</p>
-                      <p class="fw-bold text-aqua">Origin:</p>
-                      <p class="fw-bold text-aqua">Specie:</p>
-                     
+                  <div class="col-md-12">
+                    <img
+                      class="mx-auto"
+                      id="imagen"
+                      src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+                    />
                   </div>
-                  <div class="col-6 ">
-                      <p class="card-text" id="genero">Male</p>
-                      <p class="card-text" id="origen">Tierra</p>
-                      <p class="card-text" id="specie">Humano</p>
-                      
+                  <div class="col-6">
+                    <p class="fw-bold text-aqua">Gender:</p>
+                    <p class="fw-bold text-aqua">Origin:</p>
+                    <p class="fw-bold text-aqua">Specie:</p>
                   </div>
-                  <div class="col-12 ">
+                  <div class="col-6">
+                    <p class="card-text" id="genero">Male</p>
+                    <p class="card-text" id="origen">Tierra</p>
+                    <p class="card-text" id="specie">Humano</p>
+                  </div>
+                  <div class="col-12">
                     <h5 class="fw-bold text-aqua">Episodes:</h5>
                   </div>
-                    <div id="episodios" class="row ">
-                      
-                    </div>
-                  
+                  <div id="episodios" class="row"></div>
                 </div>
-               
               </div>
             </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn aqua-color" data-bs-dismiss="modal">Close</button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn aqua-color"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Launch demo modal
   </button> -->
     <script

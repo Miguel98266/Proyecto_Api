@@ -1,111 +1,149 @@
 :root {
-    --blanco: #FFF;
-    --negro: #111111;
-    --aqua: #60C0D1;
-    --aquafuerte:#09e2e2;
-    --azul: #0071b7;
-    --blanco: #FFF;
-    --naranja: #ff4f1e;
-    --fuentePrincipal: 'Raleway', sans-serif;
+  --blanco: #fff;
+  --negro: #111111;
+  --aqua: #60c0d1;
+  --aquafuerte: #09e2e2;
+  --azul: #0071b7;
+  --blanco: #fff;
+  --naranja: #ff4f1e;
+  --fuentePrincipal: "Raleway", sans-serif;
 }
-html{
-    background: url(../../assets/img/Fondo_Estrellas.png);
-    /* background-color: #040714; */
-}
-
-body{
-    background-color: transparent;
+html {
+  background: url(../../assets/img/Fondo_Estrellas.png);
+  /* background-color: #040714; */
+  opacity: 0.95;
 }
 
-img{
-    margin: 0 auto;
-    max-width: 200px;
-    max-height: 220px;
-    border-radius: 50%;
-}
-.card{
-    width: 16.5rem;
-    cursor: pointer;
-}
-.aqua-color{
-    background-color: var(--aqua);
-    color: var(--negro);
-}
-.aqua-color:hover{
-    background-color: var(--aquafuerte);
-    color: var(--negro);
-}
-p{
-    margin-bottom: 0;
-}
-.card:hover{
-    transform: scale(1.1);
+body {
+  background-color: transparent;
 }
 
-h4:hover{
-    color: #f08d49;
+img {
+  margin: 0 auto;
+  max-width: 200px;
+  max-height: 220px;
+  border-radius: 50%;
 }
-.dot{
-    height: 0.5rem;
-    width: 0.5rem;
-    
-    border-radius: 50%;
-    display: inline-block;
+.card {
+  width: 16.5rem;
+  cursor: pointer;
+}
+.aqua-color {
+  background-color: var(--aqua);
+  color: var(--blanco);
+  font-weight: 500;
+}
+.aqua-color:hover {
+  background-color: #56a9b8;
+  color: var(--blanco);
+}
+p {
+  margin-bottom: 0;
+}
+.card:hover {
+  transform: scale(1.1);
 }
 
-.alive{
-    background-color: rgb(24, 153, 67);
+h4:hover {
+  color: #f08d49;
 }
-.dead{
-    background-color: rgb(172, 27, 27);
-}
-.unknown{
-    background-color: rgb(99, 95, 95);
+.dot {
+  height: 0.5rem;
+  width: 0.5rem;
+
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.text-gray{
-    color: darkgray;
+.alive {
+  background-color: rgb(24, 153, 67);
+}
+.dead {
+  background-color: rgb(172, 27, 27);
+}
+.unknown {
+  background-color: rgb(99, 95, 95);
 }
 
+.text-gray {
+  color: darkgray;
+}
 
-.page-link{
-    background-color: var(--aqua);
-    color: var(--negro);
+.page-link {
+  background-color: var(--aqua);
+  color: var(--negro);
 }
-.page-link:hover{
-    background-color: var(--aqua);
-    color: var(--negro);
+.page-link:hover {
+  background-color: var(--aqua);
+  color: var(--negro);
 }
-.active2{
-    background-color: var(--aquafuerte);
-    color: var(--negro);
+.active2 {
+  background-color: var(--aquafuerte);
+  color: var(--negro);
 }
-.active2:hover{
-    background-color: var(--aquafuerte);
-    color: var(--negro);
+.active2:hover {
+  background-color: var(--aquafuerte);
+  color: var(--negro);
 }
 
 .modal-header {
-    background: url(../../assets/img/Fondo_Estrellas.png);
-    color: white;
-  }
+  background: url(../../assets/img/Fondo_Estrellas.png);
+
+  color: white;
+}
 .modal-body {
-    background: url(../../assets/img/Fondo_Estrellas.png);
-    color: var(--blanco);
-  }
+  background: url(../../assets/img/Fondo_Estrellas.png);
+
+  color: var(--blanco);
+}
 .modal-footer {
-    background: url(../../assets/img/Fondo_Estrellas.png);
-    color: white;
-  }
-.text-aqua{
-    color: var(--aqua);
+  background: url(../../assets/img/Fondo_Estrellas.png);
+
+  color: white;
 }
-.text-aquafuerte{
-    color: var(--aquafuerte);
+.text-aqua {
+  color: var(--aqua);
 }
-a:hover{
-    color: var(--aquafuerte);
+.text-aquafuerte {
+  color: var(--aquafuerte);
 }
-a{
-    color: var(--aqua);
+a:hover {
+  color: var(--aquafuerte);
+}
+a {
+  color: var(--aqua);
+}
+
+.x:checked + label {
+  background-color: var(--aqua);
+  color: white;
+}
+input[type="radio"] {
+  display: none;
+}
+.radio-button-aqua {
+  color: var(--aqua);
+  border-color: var(--aqua);
+}
+.radio-button-aqua:hover {
+  color: var(--blanco);
+  background-color: var(--aqua);
+  border-color: var(--aqua);
+}
+::-webkit-scrollbar {
+  width: 0.7em;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--aqua);
+  outline: 1px solid slategrey;
+}
+.accordion-button:not(.collapsed){
+    background-color: #d2e5e9;
+    color: var(--negro);
+    font-weight: 700;
 }
