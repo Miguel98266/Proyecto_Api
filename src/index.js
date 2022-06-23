@@ -341,7 +341,7 @@ function createPagination(totalPages, page) {
     getPersonajes();
   };
 }
-
+// Hola soy un comentario
 async function getPersonajes() {
   
     console.log("Current dentro de get personajes " + currentpage);
