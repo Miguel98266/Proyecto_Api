@@ -60,6 +60,7 @@ function filtrarGenero(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
     genero = e.target.htmlFor;
+    currentpage[0]=1;
     getPersonajes();
   }
 }
@@ -67,6 +68,7 @@ function filtrarStatus(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
     statu = e.target.htmlFor;
+    currentpage[0]=1;
     getPersonajes();
   }
 }
@@ -74,6 +76,7 @@ function filtrarSpecie(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
     specie = e.target.htmlFor;
+    currentpage[0]=1;
     getPersonajes();
   }
 }
@@ -255,7 +258,6 @@ function createPagination(totalPages, page) {
   var afterPage = page + 1;
   if (page > 1) {
     //show the next button if the page value is greater than 1
-
     prevPageList.classList.add("page-item");
     prevPageLink.classList.add("page-link");
     prevPageLink.textContent = "Prev";
@@ -272,9 +274,12 @@ function createPagination(totalPages, page) {
 
   // how many pages or li show before the current li
   if (page == totalPages) {
-    beforePage = beforePage - 2;
+    beforePage = (beforePage >1) ? beforePage - 2 : 1;
+    // beforePage = beforePage - 2;
+    
   } else if (page == totalPages - 1) {
-    beforePage = beforePage - 1;
+    beforePage = (beforePage ==1) ? 1  : beforePage - 1;
+    // beforePage = beforePage - 1;
   }
   // how many pages or li show after the current li
   if (page == 1) {
@@ -319,7 +324,7 @@ function createPagination(totalPages, page) {
       getPersonajes();
     };
   }
-
+  
   if (page < totalPages) {
     //show the next button if the page value is greater than 1
     nextPageList.classList.add("page-item");

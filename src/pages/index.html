@@ -13,23 +13,31 @@
     <link rel="stylesheet" href="../../assets/css/styles.css" />
     <title>Rick and Morty</title>
   </head>
+  
   <body>
+    <nav class="navbar ">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Rick_and_Morty.svg" alt="" width="250" height="auto" style="border-radius: 0;">
+        </a>
+      </div>
+    </nav>
     <main>
-      <div class="container mt-5">
+      <div class="container my-3">
         <div class="col-md-10 mx-auto">
-          <div class="row">
+          <div class="row my-3">
             <div class="col-md-8">
               <input
                 type="search"
                 class="form-control"
                 name="search"
                 id="search"
-                placeholder="Buscar Personaje"
+                placeholder="Search character"
               />
             </div>
             <div class="col-md-4 d-grid">
               <button type="button" class="btn aqua-color" id="limpiar">
-                Limpiar
+                Clean Filters
               </button>
             </div>
           </div>
@@ -39,12 +47,7 @@
           <div class="row">
             <div class="col-md-3">
               <div class="text-center fw-bold fs-4 mb-2 text-aqua">Filters</div>
-              <div
-                class="text-aquafuerte text-decoration-underline text-center mb-3"
-                style="cursor: pointer"
-              >
-                Clear Filters
-              </div>
+              
               <!-- Acordion de Filtros -->
               <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
