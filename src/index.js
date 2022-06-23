@@ -2,7 +2,6 @@ import axios from "axios";
 
 // Sección
 let currentpage = [1];
-let contenedor = document.querySelector("#contenedor");
 let contenedorPersonajes = document.querySelector("#contenedor_personajes");
 let buscar = document.querySelector("#search");
 let limpiarbuscador = document.querySelector("#limpiar");
@@ -17,26 +16,29 @@ var divspecie = document.querySelector("#species");
 var divgender = document.querySelector("#gender");
 var divstatus = document.querySelector("#status");
 
-var statusFilter = [];
-var speciesFilter = [];
-var genderFilter = [];
+var statusFilter = new Set();
+var speciesFilter = new Set();
+var genderFilter = new Set();
 
 const getEpisodios = async (episode) => {
   return await axios.get(episode).then((res) => res.data);
 };
 
-// const data = getEpisodios("https://rickandmortyapi.com/api/episode/1");
-// console.log(data.then((res) => res));
-
 getPersonajes();
 
 async function buscarPersonaje(e) {
+  console.log(statusFilter)
   nombre = e.target.value;
   currentpage[0] = 1;
-  // if (e.key === "Enter") {
-  //   getPersonajes();
-  // }
-  getPersonajes();
+ 
+  if (e.key === "Enter") {
+    statusFilter.clear();
+    speciesFilter.clear();
+    genderFilter.clear();
+    console.log(statusFilter)
+    getPersonajes();
+  }
+  // getPersonajes();
 }
 
 eventListener();
@@ -60,7 +62,7 @@ function filtrarGenero(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
     genero = e.target.htmlFor;
-    currentpage[0]=1;
+    currentpage[0] = 1;
     getPersonajes();
   }
 }
@@ -68,7 +70,7 @@ function filtrarStatus(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
     statu = e.target.htmlFor;
-    currentpage[0]=1;
+    currentpage[0] = 1;
     getPersonajes();
   }
 }
@@ -76,13 +78,13 @@ function filtrarSpecie(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
     specie = e.target.htmlFor;
-    currentpage[0]=1;
+    currentpage[0] = 1;
     getPersonajes();
   }
 }
 
 function imprimirPersonajes({ results }) {
-  limpiar(contenedorPersonajes);
+  LimpiarSeccion(contenedorPersonajes);
   if (results[0] != null) {
     results.forEach((personaje) => {
       let card = document.createElement("div");
@@ -172,9 +174,8 @@ function imprimirPersonajes({ results }) {
     let origen = document.querySelector("#origen");
     let specie = document.querySelector("#specie");
     let episode = document.querySelector("#episodios");
-    while (episode.firstChild) {
-      episode.removeChild(episode.firstChild);
-    }
+    LimpiarSeccion(episode)
+    
     nombre.classList.add("text-aquafuerte", "fw-bold");
     nombre.textContent = personaje.name;
     imagen.src = personaje.image;
@@ -236,16 +237,10 @@ function imprimirPersonajes({ results }) {
   }
 }
 
-function limpiar(secccion) {
-  while (secccion.firstChild) {
-    secccion.removeChild(secccion.firstChild);
-  }
-}
 
 function createPagination(totalPages, page) {
-  while (paginador.firstChild) {
-    paginador.removeChild(paginador.firstChild);
-  }
+  LimpiarSeccion(paginador);
+  
   var nextPageList = document.createElement("li");
   var nextPageLink = document.createElement("a");
 
@@ -274,11 +269,10 @@ function createPagination(totalPages, page) {
 
   // how many pages or li show before the current li
   if (page == totalPages) {
-    beforePage = (beforePage >1) ? beforePage - 2 : 1;
+    beforePage = beforePage > 1 ? beforePage - 2 : 1;
     // beforePage = beforePage - 2;
-    
   } else if (page == totalPages - 1) {
-    beforePage = (beforePage ==1) ? 1  : beforePage - 1;
+    beforePage = beforePage == 1 ? 1 : beforePage - 1;
     // beforePage = beforePage - 1;
   }
   // how many pages or li show after the current li
@@ -287,7 +281,7 @@ function createPagination(totalPages, page) {
   } else if (page == 2) {
     afterPage = afterPage + 1;
   }
-  
+
   for (let plength = beforePage; plength <= afterPage; plength++) {
     if (plength > totalPages) {
       //if plength is greater than totalPage length then continue
@@ -324,7 +318,7 @@ function createPagination(totalPages, page) {
       getPersonajes();
     };
   }
-  
+
   if (page < totalPages) {
     //show the next button if the page value is greater than 1
     nextPageList.classList.add("page-item");
@@ -344,23 +338,24 @@ function createPagination(totalPages, page) {
 // Hola soy un comentario
 async function getPersonajes() {
   
-    console.log("Current dentro de get personajes " + currentpage);
-    const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}&gender=${genero}&species=${specie}&status=${statu}`;
-     await axios.get(url)
-    .then((response)=>{
+  console.log("Current dentro de get personajes " + currentpage);
+  Spinner();
+  const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}&gender=${genero}&species=${specie}&status=${statu}`;
+  await axios
+    .get(url)
+    .then((response) => {
       console.log(response.data);
       console.log(response.data.info.next);
       imprimirPersonajes(response.data);
       createPagination(response.data.info.pages, currentpage[0]);
       GetAllPersonajes(url);
     })
-   .catch((error) =>{
-    console.log(error);
-    while (contenedorPersonajes.firstChild) {
-      contenedorPersonajes.removeChild(contenedorPersonajes.firstChild);
-    }
-    contenedorPersonajes.innerHTML += '<h4 class="text-white">Sorry, we couldn’t find what you are looking for.</h4>';
-   })
+    .catch((error) => {
+      console.log(error);
+      LimpiarSeccion(contenedorPersonajes);
+      contenedorPersonajes.innerHTML +=
+        '<h4 class="text-white">Sorry, we couldn’t find what you are looking for.</h4>';
+    });
 }
 
 const GetAllPersonajes = async (url) => {
@@ -368,6 +363,13 @@ const GetAllPersonajes = async (url) => {
     console.log("Current dentro de get personajes ");
     // const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}`;
     const response = await axios.get(url);
+    
+    for (const resultados of response.data.results) {
+      statusFilter.add(resultados.status);
+      speciesFilter.add(resultados.species);
+      genderFilter.add(resultados.gender);
+      console.log(statusFilter)
+    }
     if (response.data.info.next) {
       GetAllPersonajes(response.data.info.next);
       // console.log(datos)
@@ -375,42 +377,22 @@ const GetAllPersonajes = async (url) => {
     } else {
       ImprimirFiltros();
     }
-    for (const resultados of response.data.results) {
-      statusFilter.push(resultados.status);
-      speciesFilter.push(resultados.species);
-      genderFilter.push(resultados.gender);
-    }
   } catch (error) {
     console.log(error);
-    
-    contenedorPersonajes.innerHTML += '<p>Error al cargar la lista de personas buscadas</p>';
+
+    contenedorPersonajes.innerHTML +=
+      "<p>Error al cargar la lista de personas buscadas</p>";
   }
 };
 
 function ImprimirFiltros() {
-  const status = new Set(statusFilter);
-  const species = new Set(speciesFilter);
-  const gender = new Set(genderFilter);
+  LimpiarSeccion(divspecie);
+  LimpiarSeccion(divgender);
+  LimpiarSeccion(divstatus);
 
-  while (divspecie.firstChild) {
-    divspecie.removeChild(divspecie.firstChild);
-  }
-
-  while (divgender.firstChild) {
-    divgender.removeChild(divgender.firstChild);
-  }
-
-  while (divstatus.firstChild) {
-    divstatus.removeChild(divstatus.firstChild);
-  }
-  // const type = new Set(typeFilter);
-  // console.log(status);
-  // console.log(species);
-  // console.log(gender);
-  // console.log(type);
-  let statusArray = Array.from(status);
-  let speciesArray = Array.from(species);
-  let genderArray = Array.from(gender);
+  let statusArray = Array.from(statusFilter);
+  let speciesArray = Array.from(speciesFilter);
+  let genderArray = Array.from(genderFilter);
   for (let i = 0; i < speciesArray.length; i++) {
     let divform = document.createElement("div");
     divform.classList.add("form-check");
@@ -479,5 +461,31 @@ function ImprimirFiltros() {
       divform.append(inputRadio, labelRadio);
       divstatus.appendChild(divform);
     }
+  }
+}
+
+function Spinner() {
+  LimpiarSeccion(divspecie);
+  LimpiarSeccion(divgender);
+  LimpiarSeccion(divstatus);
+  const divSpinner = document.createElement("div");
+  divSpinner.classList.add("sk-chase");
+
+  divSpinner.innerHTML = `
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  `;
+  divspecie.appendChild(divSpinner);
+  divgender.appendChild(divSpinner);
+  divstatus.appendChild(divSpinner);
+}
+
+function LimpiarSeccion(seccion) {
+  while (seccion.firstChild) {
+    seccion.removeChild(seccion.firstChild);
   }
 }
