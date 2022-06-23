@@ -343,18 +343,24 @@ function createPagination(totalPages, page) {
 }
 
 async function getPersonajes() {
-  try {
+  
     console.log("Current dentro de get personajes " + currentpage);
     const url = `https://rickandmortyapi.com/api/character/?page=${currentpage}&name=${nombre}&gender=${genero}&species=${specie}&status=${statu}`;
-    const response = await axios.get(url);
-    console.log(response.data);
-    console.log(response.data.info.next);
-    imprimirPersonajes(response.data);
-    createPagination(response.data.info.pages, currentpage[0]);
-    GetAllPersonajes(url);
-  } catch (error) {
+     await axios.get(url)
+    .then((response)=>{
+      console.log(response.data);
+      console.log(response.data.info.next);
+      imprimirPersonajes(response.data);
+      createPagination(response.data.info.pages, currentpage[0]);
+      GetAllPersonajes(url);
+    })
+   .catch((error) =>{
     console.log(error);
-  }
+    while (contenedorPersonajes.firstChild) {
+      contenedorPersonajes.removeChild(contenedorPersonajes.firstChild);
+    }
+    contenedorPersonajes.innerHTML += '<h4 class="text-white">Sorry, we couldn’t find what you are looking for.</h4>';
+   })
 }
 
 const GetAllPersonajes = async (url) => {
@@ -376,6 +382,8 @@ const GetAllPersonajes = async (url) => {
     }
   } catch (error) {
     console.log(error);
+    
+    contenedorPersonajes.innerHTML += '<p>Error al cargar la lista de personas buscadas</p>';
   }
 };
 
