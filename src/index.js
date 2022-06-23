@@ -63,6 +63,9 @@ function filtrarGenero(e) {
   if (e.target.htmlFor) {
     genero = e.target.htmlFor;
     currentpage[0] = 1;
+    statusFilter.clear();
+    speciesFilter.clear();
+    genderFilter.clear();
     getPersonajes();
   }
 }
@@ -71,6 +74,9 @@ function filtrarStatus(e) {
   if (e.target.htmlFor) {
     statu = e.target.htmlFor;
     currentpage[0] = 1;
+    statusFilter.clear();
+    speciesFilter.clear();
+    genderFilter.clear();
     getPersonajes();
   }
 }
@@ -79,6 +85,9 @@ function filtrarSpecie(e) {
   if (e.target.htmlFor) {
     specie = e.target.htmlFor;
     currentpage[0] = 1;
+    statusFilter.clear();
+    speciesFilter.clear();
+    genderFilter.clear();
     getPersonajes();
   }
 }
@@ -368,7 +377,7 @@ const GetAllPersonajes = async (url) => {
       statusFilter.add(resultados.status);
       speciesFilter.add(resultados.species);
       genderFilter.add(resultados.gender);
-      console.log(statusFilter)
+      // console.log(statusFilter)
     }
     if (response.data.info.next) {
       GetAllPersonajes(response.data.info.next);
