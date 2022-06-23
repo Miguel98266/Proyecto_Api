@@ -55,14 +55,27 @@ h4:hover {
   display: inline-block;
 }
 
-.alive {
+.bg-alive {
   background-color: rgb(24, 153, 67);
 }
-.dead {
+.bg-dead {
   background-color: rgb(172, 27, 27);
 }
-.unknown {
+.bg-unknown {
   background-color: rgb(99, 95, 95);
+}
+.text-alive {
+  color: rgb(24, 153, 67);
+  font-weight: bold;
+}
+.text-dead {
+  color: rgb(172, 27, 27);
+  font-weight: bold;
+}
+.text-unknown {
+  color: rgb(99, 95, 95);
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 .text-gray {

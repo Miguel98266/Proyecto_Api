@@ -6,12 +6,12 @@ let contenedor = document.querySelector("#contenedor");
 let contenedorPersonajes = document.querySelector("#contenedor_personajes");
 let buscar = document.querySelector("#search");
 let limpiarbuscador = document.querySelector("#limpiar");
-let orden = document.querySelector("#orden");
+const paginador = document.querySelector(".pagination");
 
 var nombre = "";
-var genero="";
-var specie="";
-var statu="";
+var genero = "";
+var specie = "";
+var statu = "";
 
 var divspecie = document.querySelector("#species");
 var divgender = document.querySelector("#gender");
@@ -20,37 +20,26 @@ var divstatus = document.querySelector("#status");
 var statusFilter = [];
 var speciesFilter = [];
 var genderFilter = [];
-var typeFilter = [];
 
 const getEpisodios = async (episode) => {
   return await axios.get(episode).then((res) => res.data);
 };
 
-const data = getEpisodios("https://rickandmortyapi.com/api/episode/1");
-console.log(data.then((res) => res));
-
-// function getEpisodios(episode) {
-//   axios
-//     .get(episode)
-//     .then((res) => {
-//       console.log(res.data.name);
-//       return res.data.name;
-//     })
-//     .catch((err) => console.log(err));
-// }
+// const data = getEpisodios("https://rickandmortyapi.com/api/episode/1");
+// console.log(data.then((res) => res));
 
 getPersonajes();
 
 async function buscarPersonaje(e) {
   nombre = e.target.value;
   currentpage[0] = 1;
-  if (e.key === "Enter") {
-    getPersonajes();
-  }
+  // if (e.key === "Enter") {
+  //   getPersonajes();
+  // }
+  getPersonajes();
 }
 
 eventListener();
-
 function eventListener() {
   buscar.addEventListener("keypress", buscarPersonaje);
   gender.addEventListener("click", filtrarGenero);
@@ -58,39 +47,39 @@ function eventListener() {
   divstatus.addEventListener("click", filtrarStatus);
   limpiarbuscador.addEventListener("click", limpiarseach);
 }
+
 function limpiarseach() {
- nombre = "";
- genero="";
- specie="";
- statu="";
+  nombre = "";
+  genero = "";
+  specie = "";
+  statu = "";
   getPersonajes();
 }
 
 function filtrarGenero(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
-    genero=e.target.htmlFor;
+    genero = e.target.htmlFor;
     getPersonajes();
   }
 }
 function filtrarStatus(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
-    statu=e.target.htmlFor;
+    statu = e.target.htmlFor;
     getPersonajes();
   }
 }
 function filtrarSpecie(e) {
   console.log(e.target.htmlFor);
   if (e.target.htmlFor) {
-    specie=e.target.htmlFor;
+    specie = e.target.htmlFor;
     getPersonajes();
   }
 }
 
 function imprimirPersonajes({ results }) {
   limpiar(contenedorPersonajes);
-
   if (results[0] != null) {
     results.forEach((personaje) => {
       let card = document.createElement("div");
@@ -131,18 +120,18 @@ function imprimirPersonajes({ results }) {
 
       img.src = personaje.image;
       status_specie.textContent =
-      personaje.status + " - " + personaje.species + " - " + personaje.gender;
+        personaje.status + " - " + personaje.species + " - " + personaje.gender;
       labelLocation.textContent = "Last known location:";
       location.textContent = personaje.location.name;
       title.textContent = personaje.name;
 
       card.dataset.id = personaje.id;
       if (personaje.status == "Alive") {
-        icon.classList.add("alive");
+        icon.classList.add("bg-alive");
       } else if (personaje.status == "Dead") {
-        icon.classList.add("dead");
+        icon.classList.add("bg-dead");
       } else {
-        icon.classList.add("unknown");
+        icon.classList.add("bg-unknown");
       }
       // console.log(personaje.episode[0]);
 
@@ -175,6 +164,7 @@ function imprimirPersonajes({ results }) {
     console.log(document.querySelector("#exampleModal"));
     let nombre = document.querySelector("#nombre");
     let imagen = document.querySelector("#imagen");
+    let estado = document.querySelector("#estado");
     let genero = document.querySelector("#genero");
     let origen = document.querySelector("#origen");
     let specie = document.querySelector("#specie");
@@ -185,10 +175,17 @@ function imprimirPersonajes({ results }) {
     nombre.classList.add("text-aquafuerte", "fw-bold");
     nombre.textContent = personaje.name;
     imagen.src = personaje.image;
+    estado.textContent = personaje.status;
     genero.textContent = personaje.gender;
     origen.textContent = personaje.origin.name;
     specie.textContent = personaje.species;
-
+    if (personaje.status == "Alive") {
+      estado.classList.add("text-alive");
+    } else if (personaje.status == "Dead") {
+      estado.classList.add("text-dead");
+    } else {
+      estado.classList.add("text-unknown");
+    }
     for (let i = 0; i < personaje.episode.length; i++) {
       let divEpisodes = document.createElement("div");
       divEpisodes.classList.add("row", "border-top");
@@ -208,9 +205,7 @@ function imprimirPersonajes({ results }) {
         let regex = /(\d+)/g;
         let regex2 = /^0+|\s+/g;
         let name = res.episode;
-        console.log(name);
         name = name.match(regex);
-        console.log(name[1].match(regex2));
         if (name[1].match(regex2)) {
           name[1] = name[1].replace("0", "");
         }
@@ -244,9 +239,6 @@ function limpiar(secccion) {
   }
 }
 
-// selecting required element
-const paginador = document.querySelector(".pagination");
-
 function createPagination(totalPages, page) {
   while (paginador.firstChild) {
     paginador.removeChild(paginador.firstChild);
@@ -257,7 +249,6 @@ function createPagination(totalPages, page) {
   let prevPageLink = document.createElement("a");
   let prevPageList = document.createElement("li");
 
-  
   console.log("Inicio " + page);
   var active;
   var beforePage = page - 1;
@@ -278,7 +269,7 @@ function createPagination(totalPages, page) {
     // console.log(currentpage);
     getPersonajes();
   };
-  
+
   // how many pages or li show before the current li
   if (page == totalPages) {
     beforePage = beforePage - 2;
@@ -291,7 +282,7 @@ function createPagination(totalPages, page) {
   } else if (page == 2) {
     afterPage = afterPage + 1;
   }
-  console.log("beforePage " + beforePage);
+  
   for (let plength = beforePage; plength <= afterPage; plength++) {
     if (plength > totalPages) {
       //if plength is greater than totalPage length then continue
@@ -345,6 +336,7 @@ function createPagination(totalPages, page) {
     getPersonajes();
   };
 }
+
 async function getPersonajes() {
   try {
     console.log("Current dentro de get personajes " + currentpage);
@@ -382,20 +374,19 @@ const GetAllPersonajes = async (url) => {
   }
 };
 
-
 function ImprimirFiltros() {
   const status = new Set(statusFilter);
   const species = new Set(speciesFilter);
   const gender = new Set(genderFilter);
-  
+
   while (divspecie.firstChild) {
     divspecie.removeChild(divspecie.firstChild);
   }
-  
-    while (divgender.firstChild) {
-      divgender.removeChild(divgender.firstChild);
-    }
-  
+
+  while (divgender.firstChild) {
+    divgender.removeChild(divgender.firstChild);
+  }
+
   while (divstatus.firstChild) {
     divstatus.removeChild(divstatus.firstChild);
   }
@@ -417,7 +408,7 @@ function ImprimirFiltros() {
     labelRadio.classList.add("btn", "radio-button-aqua");
 
     if (!document.querySelector(`${speciesArray[i]}`)) {
-      if (speciesArray[i]==specie) {
+      if (speciesArray[i] == specie) {
         inputRadio.checked = true;
       }
       inputRadio.name = "species";
@@ -425,13 +416,12 @@ function ImprimirFiltros() {
       inputRadio.value = speciesArray[i];
       labelRadio.htmlFor = speciesArray[i];
       labelRadio.textContent = speciesArray[i];
-      
+
       divform.append(inputRadio, labelRadio);
       divspecie.appendChild(divform);
     }
   }
   for (let i = 0; i < genderArray.length; i++) {
-    
     let divform = document.createElement("div");
     divform.classList.add("form-check");
     let inputRadio = document.createElement("input");
@@ -441,7 +431,7 @@ function ImprimirFiltros() {
     labelRadio.classList.add("btn", "radio-button-aqua");
 
     if (!document.querySelector(`${genderArray[i]}`)) {
-      if (genderArray[i]==genero) {
+      if (genderArray[i] == genero) {
         inputRadio.checked = true;
       }
       inputRadio.name = "gender";
@@ -449,13 +439,12 @@ function ImprimirFiltros() {
       inputRadio.value = genderArray[i];
       labelRadio.htmlFor = genderArray[i];
       labelRadio.textContent = genderArray[i];
-      
+
       divform.append(inputRadio, labelRadio);
       divgender.appendChild(divform);
     }
   }
   for (let i = 0; i < statusArray.length; i++) {
-    
     let divform = document.createElement("div");
     divform.classList.add("form-check");
     let inputRadio = document.createElement("input");
@@ -465,7 +454,7 @@ function ImprimirFiltros() {
     labelRadio.classList.add("btn", "radio-button-aqua");
 
     if (!document.querySelector(`${statusArray[i]}`)) {
-      if (statusArray[i]==statu) {
+      if (statusArray[i] == statu) {
         inputRadio.checked = true;
       }
       inputRadio.name = "status";
@@ -473,7 +462,7 @@ function ImprimirFiltros() {
       inputRadio.value = statusArray[i];
       labelRadio.htmlFor = statusArray[i];
       labelRadio.textContent = statusArray[i];
-      
+
       divform.append(inputRadio, labelRadio);
       divstatus.appendChild(divform);
     }
