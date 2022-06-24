@@ -175,7 +175,7 @@ function imprimirPersonajes({ results }) {
   }
 
   function displayModal(personaje) {
-    console.log(document.querySelector("#exampleModal"));
+    // console.log(document.querySelector("#exampleModal"));
     let nombre = document.querySelector("#nombre");
     let imagen = document.querySelector("#imagen");
     let estado = document.querySelector("#estado");
@@ -377,7 +377,7 @@ const GetAllPersonajes = async (url) => {
       statusFilter.add(resultados.status);
       speciesFilter.add(resultados.species);
       genderFilter.add(resultados.gender);
-      // console.log(statusFilter)
+      // console.log(statusFilter) 
     }
     if (response.data.info.next) {
       GetAllPersonajes(response.data.info.next);

@@ -84,11 +84,13 @@ h4:hover {
 
 .page-link {
   background-color: var(--aqua);
-  color: var(--negro);
+  color: var(--blanco);
+  font-weight: 700;
 }
 .page-link:hover {
   background-color: var(--aqua);
-  color: var(--negro);
+  color: var(--blanco);
+  font-weight: 700;
 }
 .active2 {
   background-color: var(--aquafuerte);
