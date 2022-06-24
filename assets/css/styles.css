@@ -93,11 +93,11 @@ h4:hover {
   font-weight: 700;
 }
 .active2 {
-  background-color: var(--aquafuerte);
+  background-color: #56a9b8;
   color: var(--blanco);
 }
 .active2:hover {
-  background-color: var(--aquafuerte);
+  background-color: #56a9b8;
   color: var(--blanco);
 }
 
