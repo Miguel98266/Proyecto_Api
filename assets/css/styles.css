@@ -139,6 +139,7 @@ input[type="radio"] {
 .radio-button-aqua {
   color: var(--aqua);
   border-color: var(--aqua);
+  text-transform: capitalize;
 }
 .radio-button-aqua:hover {
   color: var(--blanco);
