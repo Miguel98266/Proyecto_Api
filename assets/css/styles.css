@@ -98,7 +98,7 @@ h4:hover {
 }
 .active2:hover {
   background-color: var(--aquafuerte);
-  color: var(--negro);
+  color: var(--blanco);
 }
 
 .modal-header {
